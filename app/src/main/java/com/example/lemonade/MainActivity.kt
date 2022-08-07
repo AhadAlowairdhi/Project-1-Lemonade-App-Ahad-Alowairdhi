@@ -88,8 +88,7 @@ class MainActivity : AppCompatActivity() {
             SELECT -> {
                 lemonadeState = SQUEEZE
                 //  - The lemonSize variable needs to be set using the 'pick()' method in the LemonTree class
-                val tree: LemonTree = lemonTree
-                lemonSize = tree.pick()
+                lemonSize = lemonTree.pick()
                 //  - The squeezeCount should be 0 since we haven't squeezed any lemons just yet.
                 squeezeCount = 0
             } // end SELECT state
@@ -97,19 +96,19 @@ class MainActivity : AppCompatActivity() {
             // TODO: When the image is clicked in the SQUEEZE state the squeezeCount needs to be
             //  INCREASED by 1 and lemonSize needs to be DECREASED by 1.
             SQUEEZE ->{
-                squeezeCount =+ 1
+                squeezeCount += 1
                 lemonSize -= 1
                 //  - If the lemonSize has reached 0, it has been juiced and the state should become DRINK
                 //  - Additionally, lemonSize is no longer relevant and should be set to -1
-                lemonadeState = if (lemonSize == 0){
-                    DRINK
-                } else SQUEEZE
+                if (lemonSize == 0){
+                   lemonadeState = DRINK
+                    lemonSize = -1
+                }
             } // end SQUEEZE state
 
             // TODO: When the image is clicked in the DRINK state the state should become RESTART
             DRINK ->{
                 lemonadeState = RESTART
-                lemonSize = -1
             } // end DRINK state
             // TODO: When the image is clicked in the RESTART state the state should become SELECT
             RESTART -> lemonadeState = SELECT
